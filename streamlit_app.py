@@ -214,7 +214,7 @@ if selecao == "Página Inicial":
                 """)
     
     with col2:
-        st.image("images/euzin.jpg", caption="Prof Ms Luís Eduardo Formentini", use_container_width=True)
+        st.image("images/euzin.jpg", caption="Prof Ms Luís Eduardo Formentini", width='stretch')
 
 # --- Seção: Introdução ---
 elif selecao == "Introdução":
@@ -301,7 +301,7 @@ elif selecao == "Critérios de Seleção":
             # Mostrar resultados SEM o índice
             st.subheader(f"Escolas Prioritárias ({len(dados_filtrados)} encontradas)")
             st.dataframe(dados_filtrados[['SRE', 'ESCOLA']], 
-                        use_container_width=True, 
+                        width='stretch', 
                         hide_index=True)  # Esta linha remove a coluna de números
         
             # Estatísticas rápidas
@@ -442,13 +442,13 @@ elif selecao == "Gráficos":
             )
             
             # Mostrar gráfico no Streamlit
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, config={'displayModeBar': False, 'showlegend': True})
             
             # Mostrar tabela com os dados
             st.subheader("📋 Dados Detalhados")
             st.dataframe(
                 dados_filtrados[['ANO', 'META', 'IDEBES']].style.format({'META': '{:.2f}', 'IDEBES': '{:.2f}'}),
-                use_container_width=True
+                width='stretch'
             )
             
             # Estatísticas rápidas
@@ -523,7 +523,7 @@ elif selecao == "Mapas":
                 st.subheader("📋 Lista de Escolas no Mapa")
                 st.dataframe(
                     dados_escolas[['ESCOLA', 'SRE', 'EQUIPE_RESPONSAVEL', 'IDEBES_2024']],
-                    use_container_width=True
+                    width='stretch'
                 )
         else:
             st.error("Não foi possível carregar o mapa. Verifique se os arquivos necessários estão na pasta.")

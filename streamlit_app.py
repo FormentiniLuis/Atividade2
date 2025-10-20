@@ -7,7 +7,7 @@ import geopandas as gpd
 
 
 # --- Barra lateral para navegação ---
-st.sidebar.image("/workspaces/Atividade2/images/brasao2.jpg", width=300)
+st.sidebar.image("images/brasao2.jpg", width=300)
 st.sidebar.title("Navegação")
 selecao = st.sidebar.radio("Escolha a seção:",
                            ["Página Inicial", "Introdução", "Critérios de Seleção", "Gráficos", "Mapas"])
@@ -17,7 +17,7 @@ def carregar_dados_escolas():
     """Carrega o arquivo CSV limpo das escolas prioritárias"""
     try:
         # Tenta carregar o arquivo limpo
-        dados = pd.read_csv('/workspaces/Atividade2/planilhas/Escolas_Prioritarias_LIMPO.csv', encoding='utf-8')
+        dados = pd.read_csv('planilhas/Escolas_Prioritarias_LIMPO.csv', encoding='utf-8')
         return dados
     except Exception as e:
         st.error(f"Erro ao carregar o arquivo limpo: {e}")
@@ -33,7 +33,7 @@ def carregar_dados_metas_ideb():
         
         for encoding in codificacoes:
             try:
-                df = pd.read_csv('/workspaces/Atividade2/planilhas/metas e idebes.csv', sep=';', decimal=',', encoding=encoding)
+                df = pd.read_csv('planilhas/metas e idebes.csv', sep=';', decimal=',', encoding=encoding)
                 return df
             except UnicodeDecodeError:
                 continue
@@ -41,7 +41,7 @@ def carregar_dados_metas_ideb():
                 continue
         
         # Última tentativa
-        df = pd.read_csv('/workspaces/Atividade2/planilhas/metas e idebes.csv', sep=';', decimal=',', encoding='latin-1', engine='python')
+        df = pd.read_csv('planilhas/metas e idebes.csv', sep=';', decimal=',', encoding='latin-1', engine='python')
         return df
     except Exception as e:
         st.error(f"Erro ao carregar arquivo de metas e IDEB: {e}")
@@ -52,7 +52,7 @@ def criar_mapa_escolas():
     """Cria mapa interativo com as escolas prioritárias e municípios com SRE"""
     try:
         # Carregar dados das escolas
-        df_escolas = pd.read_csv('/workspaces/Atividade2/mapa/escolas_prioritárias.csv', sep=';', encoding='utf-8', skiprows=1)
+        df_escolas = pd.read_csv('mapa/escolas_prioritárias.csv', sep=';', encoding='utf-8', skiprows=1)
         
         # Renomear colunas
         novas_colunas = [
@@ -67,7 +67,7 @@ def criar_mapa_escolas():
         df_escolas_clean['LONGITUDE'] = df_escolas_clean['LONGITUDE'].astype(str).str.replace(',', '.').astype(float)
         
         # Carregar relação município-SRE
-        df_regionais = pd.read_csv('/workspaces/Atividade2/mapa/regionais_sedu.csv')
+        df_regionais = pd.read_csv('mapa/regionais_sedu.csv')
         
         # Criar dicionário município -> SRE
         municipio_para_sre = {}
@@ -133,7 +133,7 @@ def criar_mapa_escolas():
         
         # Adicionar municípios do ES com tooltips
         try:
-            gdf_municipios = gpd.read_file('/workspaces/Atividade2/mapa/BR_Municipios_2022.shp')
+            gdf_municipios = gpd.read_file('mapa/BR_Municipios_2022.shp')
             gdf_es = gdf_municipios[gdf_municipios['SIGLA_UF'] == 'ES']
             
             # Função para normalizar nomes (remover acentos)
@@ -315,7 +315,7 @@ elif selecao == "Critérios de Seleção":
             st.write("Colunas encontradas:", list(dados_escolas.columns))
 
     else:
-        st.error("Não foi possível carregar o arquivo '/workspaces/Atividade2/planilhas/Escolas_Prioritarias_LIMPO.csv.csv'")
+        st.error("Não foi possível carregar o arquivo 'planilhas/Escolas_Prioritarias_LIMPO.csv'")
 
 
 # --- Seção: Gráficos ---
